@@ -10,7 +10,12 @@ def convert_class_to_full_css(class_converter, content, variable, all_vars):
     cl_children = cl + "-ch-all *"
     for child in all_vars:
         if child is not variable:
-            cl_children += ":not({})".format(class_converter(child))
+            formatted = class_converter(child)
+            cl_children += ":not({})".format(formatted)
+            cl_children += ":not({})".format(formatted + "-ch-all")
+            cl_children += ":not({})".format(formatted + "-ch")
+            cl_child += ":not({})".format(formatted)
+            cl_child += ":not({})".format(formatted + "-ch-all")
 
     ret = cl + ",\n" + cl_child + ",\n" + cl_children_self + ",\n" + cl_children + " {\n"
     ret += "\t" + content + "\n"
